@@ -1,11 +1,14 @@
 package com.project.internship.service;
 
 import com.project.internship.model.Candidate;
+import com.project.internship.model.Skill;
 import com.project.internship.repository.CandidateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class CandidateService {
@@ -17,7 +20,9 @@ public class CandidateService {
     SkillService skillService;
 
     public Candidate save(Candidate candidate) {
-        if (candidate != null) {
+        if (candidateRepository.findByEmailOrContactNumber(candidate.getEmail(), candidate.getContactNumber()) == null) {
+            Set<Skill> updatedSkills = skillService.getSkillIds(candidate.getSkills());
+            candidate.setSkills(updatedSkills);
             candidate = candidateRepository.save(candidate);
             return candidate;
         }
@@ -36,8 +41,10 @@ public class CandidateService {
     public boolean update(Candidate candidate) {
         Candidate oldCandidate = findOne(candidate.getId());
         if (oldCandidate != null) {
+            Set<Skill> updatedSkills = skillService.getSkillIds(candidate.getSkills());
+            candidate.setSkills(updatedSkills);
             candidateRepository.save(candidate);
-            return skillService.updateSkillsForCandidate(candidate.getId(), candidate.getSkills());
+            return true;
         }
         return false;
     }

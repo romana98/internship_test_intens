@@ -1,0 +1,21 @@
+<mat-toolbar color="primary">
+
+  <a [routerLink]="['']" style="margin-left: 3%; margin-top: 0.5%">
+    <mat-icon [ngStyle]="{'color':'white'}">work_outline</mat-icon>
+  </a>
+  <a [routerLink]="['']">
+    <button mat-flat-button color="primary" style="font-size: x-large">Job Candidates</button>
+  </a>
+
+  <span class="example-spacer" style="width: 20%"></span>
+  <a [routerLink]="['add-candidate']">
+    <button mat-flat-button color="primary" style="font-size: large">Add Candidate</button>
+  </a>
+  <a [routerLink]="['add-skill']" style="margin-left: 5%;">
+    <button mat-flat-button color="primary" style="font-size: large">Add Skill</button>
+  </a>
+  <a [routerLink]="['view-edit-skill']" style="margin-left: 5%;">
+    <button mat-flat-button color="primary" style="font-size: large">View Skills</button>
+  </a>
+
+</mat-toolbar>

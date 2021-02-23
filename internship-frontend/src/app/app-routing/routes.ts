@@ -26,7 +26,7 @@ export const routes: Routes = [
     component: ViewEditSkillComponent
   },
   {
-    path: '*',
+    path: '**',
     redirectTo: ''
   }
 ];

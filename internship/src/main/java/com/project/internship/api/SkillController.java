@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping(value = "/api/skills", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SkillController {

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping(value = "/api/candidates", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CandidateController {
@@ -46,9 +47,9 @@ public class CandidateController {
     }
 
     @RequestMapping(value = "/{candidateId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteCandidate(@PathVariable Integer candidateId) {
+    public ResponseEntity<String> deleteCandidate(@PathVariable Integer candidateId) {
         if (candidateService.delete(candidateId)) {
-            return new ResponseEntity<>("Successfully deleted candidate.", HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Error occurred while deleting candidate", HttpStatus.BAD_REQUEST);
     }

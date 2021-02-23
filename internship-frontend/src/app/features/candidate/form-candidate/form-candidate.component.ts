@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DataStorageService} from '../../../service/data-storage/data-storage.service';
 
 @Component({
   selector: 'app-form-candidate',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormCandidateComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dataStorage: DataStorageService) {
+  }
 
   ngOnInit(): void {
   }

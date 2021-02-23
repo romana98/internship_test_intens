@@ -1,1 +1,57 @@
-<p>view-edit-candidate works!</p>
+<h1 class="mat-display-1;" style="text-align: center;  margin-top: 0.7%;">Candidates</h1>
+<mat-divider></mat-divider>
+<br><br>
+
+<div style="text-align: center;">
+  <form [formGroup]="form" (ngSubmit)="submit()" style="display: inline-block; width: 100%">
+    <mat-form-field>
+      <mat-label>Candidate name:</mat-label>
+      <input matInput id="name" name="name" placeholder="candidate name" [formControl]="form.controls.name">
+    </mat-form-field>
+
+    <mat-form-field style="margin-left: 2%">
+      <mat-label>Skill(s):</mat-label>
+      <input matInput id="skill" name="skill" placeholder="skill(s)" [formControl]="form.controls.skill">
+    </mat-form-field>
+
+    <button mat-raised-button type="submit" style="margin-left: 2%">Search</button>
+  </form>
+</div>
+
+<br><br><br>
+<div style="display:inline-block; width: 100%">
+  <div style="padding-left: 6%; width: 55%; float: left">
+
+    <app-table [dataSource]="candidates.content"
+               [columnsToDisplay]="['name', 'date of birth', 'contact number', 'email', 'delete']"
+               (Delete)="onDelete($event)"
+               (Click)="showSkills($event)"
+               (DoubleClick)="goToEditCandidate($event)"
+               [columnsToIterate]="['fullName', 'dateOfBirth', 'contactNumber', 'email']"></app-table>
+
+    <app-pagination [pageSize]="pageSizeCandidate"
+                    [totalItems]="candidates.totalElements"
+                    [totalPages]="candidates.totalPages"
+                    [currentPage]="candidates.number"
+                    (ChangePage)="onPaginationCandidate($event)"
+    ></app-pagination>
+
+  </div>
+
+  <div style="padding-right: 10%; width: 25%; float: right" [hidden]="showSkillsValue">
+
+    <app-table [dataSource]="skills.content"
+               [columnsToDisplay]="['name']"
+               (Delete)="onDelete($event)"
+               (Click)="showSkills($event)"
+               [columnsToIterate]="['name']"></app-table>
+
+    <app-pagination [pageSize]="pageSizeSkill"
+                    [totalItems]="skills.totalElements"
+                    [totalPages]="skills.totalPages"
+                    [currentPage]="skills.number"
+                    (ChangePage)="onPaginationSkill($event)"
+    ></app-pagination>
+
+  </div>
+</div>

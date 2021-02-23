@@ -18,7 +18,7 @@ public class SkillService {
     SkillRepository skillRepository;
 
     public Skill save(Skill skill) {
-        if (skill != null) {
+        if (skillRepository.findByName(skill.getName()) == null) {
             skill = skillRepository.save(skill);
             return skill;
         }
@@ -26,9 +26,9 @@ public class SkillService {
     }
 
     public boolean delete(Integer skillId) {
-        Skill skill = findOne(skillId);
-        if (skill != null) {
-            skillRepository.delete(skill);
+        List<Skill> skills = skillRepository.findAllByReference(skillId);
+        if (skills.isEmpty()) {
+            skillRepository.delete(findOne(skillId));
             return true;
         }
         return false;
@@ -36,7 +36,8 @@ public class SkillService {
 
     public boolean update(Skill skill) {
         Skill oldSkill = findOne(skill.getId());
-        if (oldSkill != null) {
+        Skill existSkill = findByName(skill.getName());
+        if (oldSkill != null && existSkill == null) {
             skillRepository.save(skill);
             return true;
         }
@@ -47,18 +48,22 @@ public class SkillService {
         return skillRepository.findAll(pageable);
     }
 
-    public List<Skill> findAllByCandidateId(Integer candidateId) {
-        return skillRepository.findAllByCandidateId(candidateId);
+    public Page<Skill> findAllByCandidate(Integer candidateId, Pageable pageable) {
+        return skillRepository.findAllByCandidateId(candidateId, pageable);
     }
 
     public Skill findOne(Integer skillId) {
         return skillRepository.findById(skillId).orElse(null);
     }
 
+    public Skill findByName(String name) {
+        return skillRepository.findByName(name);
+    }
+
     public Set<Skill> getSkillIds(Set<Skill> skills) {
         Set<Skill> updatedSkills = new HashSet<>();
         for (Skill skill : skills) {
-            Skill foundSkill = skillRepository.findByName(skill.getName());
+            Skill foundSkill = findByName(skill.getName());
             if (foundSkill != null) {
                 updatedSkills.add(foundSkill);
             } else {

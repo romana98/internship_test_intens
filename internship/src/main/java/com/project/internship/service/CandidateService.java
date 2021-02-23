@@ -56,4 +56,26 @@ public class CandidateService {
     public Candidate findOne(Integer candidateId) {
         return candidateRepository.findById(candidateId).orElse(null);
     }
+
+    public boolean removeSkill(Integer candidateId, Integer skillId) {
+        Skill skill = skillService.findOne(skillId);
+        Candidate candidate = findOne(candidateId);
+        if (skill != null && candidate != null) {
+            candidate.getSkills().remove(skill);
+            candidateRepository.save(candidate);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addSkill(Integer candidateId, Skill newSkill) {
+        Skill skill = skillService.findByName(newSkill.getName());
+        Candidate candidate = findOne(candidateId);
+        if (candidate != null) {
+            candidate.getSkills().add(skill != null ? skill : newSkill);
+            candidateRepository.save(candidate);
+            return true;
+        }
+        return false;
+    }
 }

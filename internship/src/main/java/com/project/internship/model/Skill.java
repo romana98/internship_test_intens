@@ -59,4 +59,19 @@ public class Skill {
     public void setCandidates(List<Candidate> candidates) {
         this.candidates = candidates;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Skill)) {
+            return false;
+        }
+
+        Skill s = (Skill) o;
+
+        return id == s.id && name.equals(s.name);
+    }
 }

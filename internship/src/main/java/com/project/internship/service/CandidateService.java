@@ -1,5 +1,6 @@
 package com.project.internship.service;
 
+import com.project.internship.dto.SearchDTO;
 import com.project.internship.model.Candidate;
 import com.project.internship.model.Skill;
 import com.project.internship.repository.CandidateRepository;
@@ -77,5 +78,22 @@ public class CandidateService {
             return true;
         }
         return false;
+    }
+
+    public Page<Candidate> search(SearchDTO searchDTO, Pageable pageable) {
+        String name = searchDTO.getByName();
+        String skillName = searchDTO.getBySkillName();
+
+        if (name.equals("") && skillName.equals("")) {
+            return findAll(pageable);
+
+        }else if(name.equals("")){
+            return candidateRepository.findAllBySkillName(skillName, pageable);
+
+        }else if(skillName.equals("")){
+            return candidateRepository.findAllByName(name, pageable);
+        }
+
+        return candidateRepository.findAllByNameAndSkillName(name, skillName, pageable);
     }
 }

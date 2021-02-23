@@ -1,6 +1,7 @@
 package com.project.internship.api;
 
 import com.project.internship.dto.CandidateDTO;
+import com.project.internship.dto.SearchDTO;
 import com.project.internship.dto.SkillDTO;
 import com.project.internship.helper.CandidateMapper;
 import com.project.internship.helper.SkillMapper;
@@ -19,7 +20,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/candidates", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/candidates", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CandidateController {
 
     @Autowired
@@ -62,7 +63,7 @@ public class CandidateController {
     }
 
     @RequestMapping(value = "/by-page", method = RequestMethod.GET)
-    public ResponseEntity<Page<CandidateDTO>> getCandidatePage(Pageable pageable) {
+    public ResponseEntity<Page<CandidateDTO>> getCandidatesPage(Pageable pageable) {
         Page<Candidate> page = candidateService.findAll(pageable);
         List<CandidateDTO> dtos = candidateMapper.toDTOList(page.toList());
         Page<CandidateDTO> pageCandidateDTOS = new PageImpl<>(dtos, page.getPageable(), page.getTotalElements());
@@ -81,7 +82,7 @@ public class CandidateController {
     }
 
     @RequestMapping(value = "/{candidateId}/{skillId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteSkillFromCandidate(@PathVariable Integer candidateId, @PathVariable Integer skillId) {
+    public ResponseEntity<?> removeSkillFromCandidate(@PathVariable Integer candidateId, @PathVariable Integer skillId) {
         if (candidateService.removeSkill(candidateId, skillId)) {
             return new ResponseEntity<>("Successfully removed skill.", HttpStatus.CREATED);
         }
@@ -89,10 +90,19 @@ public class CandidateController {
     }
 
     @RequestMapping(value = "/{candidateId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> addSkillFromCandidate(@PathVariable Integer candidateId, @RequestBody SkillDTO skillDTO) {
+    public ResponseEntity<?> addSkillToCandidate(@PathVariable Integer candidateId, @RequestBody SkillDTO skillDTO) {
         if (candidateService.addSkill(candidateId, skillMapper.toEntity(skillDTO))) {
             return new ResponseEntity<>("Successfully added skill.", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Error occurred while adding skill", HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value="/search", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<CandidateDTO>> searchCandidates(@RequestBody SearchDTO searchDTO, Pageable pageable){
+        Page<Candidate> page = candidateService.search(searchDTO, pageable);
+        List<CandidateDTO> candidateDTOs = candidateMapper.toDTOList(page.toList());
+        Page<CandidateDTO> candidateDTOPage = new PageImpl<>(candidateDTOs, page.getPageable(), page.getTotalElements());
+
+        return new ResponseEntity<>(candidateDTOPage, HttpStatus.OK);
     }
 }

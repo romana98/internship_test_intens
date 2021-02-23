@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/skills", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/skills", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SkillController {
 
     @Autowired
@@ -68,7 +68,7 @@ public class SkillController {
     }
 
     @RequestMapping(value = "/{candidateId}/by-page", method = RequestMethod.GET)
-    public ResponseEntity<Page<SkillDTO>> getSkillPageByCandidate(@PathVariable Integer candidateId, Pageable pageable) {
+    public ResponseEntity<Page<SkillDTO>> getSkillsPageByCandidate(@PathVariable Integer candidateId, Pageable pageable) {
         Page<Skill> page = skillService.findAllByCandidate(candidateId, pageable);
         List<SkillDTO> dtos = skillMapper.toDTOList(page.toList());
         Page<SkillDTO> pageSkillDTOS = new PageImpl<>(dtos, page.getPageable(), page.getTotalElements());
@@ -77,7 +77,7 @@ public class SkillController {
     }
 
     @RequestMapping(value = "/by-page", method = RequestMethod.GET)
-    public ResponseEntity<Page<SkillDTO>> getSkillPage(Pageable pageable) {
+    public ResponseEntity<Page<SkillDTO>> getSkillsPage(Pageable pageable) {
         Page<Skill> page = skillService.findAll(pageable);
         List<SkillDTO> dtos = skillMapper.toDTOList(page.toList());
         Page<SkillDTO> pageSkillDTOS = new PageImpl<>(dtos, page.getPageable(), page.getTotalElements());

@@ -6,6 +6,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, MatOptionModule} from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MaterialModule} from '../../shared/material.module';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {MaterialModule} from '../../shared/material.module';
     MatDatepickerModule,
     MatNativeDateModule,
     MatAutocompleteModule,
-    MatOptionModule
+    MatOptionModule,
+    MatSelectModule
   ]
 })
 export class CandidateModule {

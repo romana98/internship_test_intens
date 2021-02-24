@@ -93,4 +93,12 @@ public class SkillController {
 
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/select", method = RequestMethod.GET)
+    public ResponseEntity<List<SkillDTO>> getSkillsForSelect() {
+        List<Skill> skills = skillService.findAll();
+        List<SkillDTO> dtos = skillMapper.toDTOList(skills);
+
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
 }

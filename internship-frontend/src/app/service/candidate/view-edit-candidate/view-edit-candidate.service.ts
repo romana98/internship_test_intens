@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Candidates} from '../../../model/candidate/candidates';
 import {Skills} from '../../../model/skill/skills';
+import {Skill} from '../../../model/skill/skill';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,10 @@ export class ViewEditCandidateService {
 
   getSkillsByCandidate(candidateId: number, page: number): Observable<Skills> {
     return this.http.get<Skills>(this.pathSkill + '/' + candidateId + '/by-page?page=' + page + '&size=5');
+  }
+
+  getSkillsForSelect(): Observable<Skill[]> {
+    return this.http.get<Skill[]>(this.pathSkill + '/select');
   }
 
   delete(candidateId: number): Observable<any> {

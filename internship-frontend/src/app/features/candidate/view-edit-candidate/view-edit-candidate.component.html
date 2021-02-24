@@ -8,9 +8,11 @@
       <input matInput id="name" name="name" placeholder="candidate name" [formControl]="form.controls.name">
     </mat-form-field>
 
-    <mat-form-field style="margin-left: 2%">
+    <mat-form-field appearance="legacy" style="margin-left: 2%">
       <mat-label>Skill(s):</mat-label>
-      <input matInput id="skill" name="skill" placeholder="skill(s)" [formControl]="form.controls.skill">
+      <mat-select [formControl]="form.controls.skill" multiple>
+        <mat-option *ngFor="let skills of skillsSelect" [value]="skills">{{skills}}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <button mat-raised-button type="submit" style="margin-left: 2%">Search</button>

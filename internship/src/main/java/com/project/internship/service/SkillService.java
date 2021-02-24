@@ -48,6 +48,10 @@ public class SkillService {
         return skillRepository.findAll(pageable);
     }
 
+    public List<Skill> findAll() {
+        return skillRepository.findAll();
+    }
+
     public List<Skill> findAll(String subStrSkill) {
         return skillRepository.findAll(subStrSkill);
     }

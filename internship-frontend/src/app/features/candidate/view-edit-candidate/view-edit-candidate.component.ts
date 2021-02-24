@@ -23,8 +23,10 @@ export class ViewEditCandidateComponent implements OnInit {
   skills: Skills;
   showSkillsValue: boolean;
   showSkillsCurrentCandidate: number;
+  skillsSelect: string[];
 
   form: FormGroup;
+
 
   constructor(private viewEditCandidateService: ViewEditCandidateService,
               private dataStorage: DataStorageService,
@@ -51,10 +53,19 @@ export class ViewEditCandidateComponent implements OnInit {
         this.candidates = result;
       }
     );
+
+    this.viewEditCandidateService.getSkillsForSelect().subscribe(
+      result => {
+        this.skillsSelect = result.map(skill => skill.name);
+      }
+    );
   }
 
   submit(): void {
-    const sendData = {byName: this.form.value.name, bySkillName: this.form.value.skill};
+    const sendData = {
+      byName: this.form.value.name,
+      bySkillName: this.form.value.skill.length === 0 ? '' : this.form.value.skill.join('|')
+    };
 
     this.viewEditCandidateService.search(sendData).subscribe(
       result => {

@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -86,13 +88,15 @@ public class CandidateService {
         if (name.equals("") && skillName.equals("")) {
             return findAll(pageable);
 
-        }else if(name.equals("")){
-            return candidateRepository.findAllBySkillName(skillName, pageable);
+        } else if (name.equals("")) {
+            List<String> skills = Arrays.asList(skillName.split("\\|"));
+            return candidateRepository.findAllBySkillsName(skills, (long) skills.size(), pageable);
 
-        }else if(skillName.equals("")){
+        } else if (skillName.equals("")) {
             return candidateRepository.findAllByName(name, pageable);
         }
 
-        return candidateRepository.findAllByNameAndSkillName(name, skillName, pageable);
+        List<String> skills = Arrays.asList(skillName.split("\\|"));
+        return candidateRepository.findAllByNameAndSkillName(name, skills, (long) skills.size(), pageable);
     }
 }

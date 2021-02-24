@@ -1,6 +1,5 @@
 package com.project.internship.dto;
 
-import javax.validation.constraints.NotBlank;
 
 public class SkillDTO {
 
@@ -8,7 +7,6 @@ public class SkillDTO {
 
     private String name;
 
-    @NotBlank
     public SkillDTO() {
 
     }

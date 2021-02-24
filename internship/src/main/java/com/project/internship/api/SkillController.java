@@ -85,4 +85,12 @@ public class SkillController {
 
         return new ResponseEntity<>(pageSkillDTOS, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/autocomplete/{subStrSkill}", method = RequestMethod.GET)
+    public ResponseEntity<List<SkillDTO>> getSkillsForAutocomplete(@PathVariable String subStrSkill) {
+        List<Skill> skills = skillService.findAll(subStrSkill);
+        List<SkillDTO> dtos = skillMapper.toDTOList(skills);
+
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
 }

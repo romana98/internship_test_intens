@@ -8,6 +8,7 @@ import {SharedModule} from './shared/shared.module';
 import {CandidateModule} from './features/candidate/candidate.module';
 import {SkillModule} from './features/skill/skill.module';
 import {ServiceModule} from './service/service.module';
+import {MaterialModule} from './shared/material.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {ServiceModule} from './service/service.module';
     SharedModule,
     CandidateModule,
     SkillModule,
+    MaterialModule,
     ServiceModule
   ],
   providers: [],

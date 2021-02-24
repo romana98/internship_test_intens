@@ -18,5 +18,8 @@ public interface SkillRepository extends JpaRepository<Skill, Integer> {
     @Query("SELECT skill FROM Candidate candidate JOIN candidate.skills skill WHERE skill.id = ?1")
     List<Skill> findAllByReference(Integer skillId);
 
+    @Query("SELECT skill FROM Skill skill WHERE upper(skill.name) like upper(CONCAT('%', ?1, '%'))")
+    List<Skill> findAll(String subStrSkill);
+
     Skill findByName(String name);
 }

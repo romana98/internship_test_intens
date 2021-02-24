@@ -2,30 +2,21 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormCandidateComponent} from './form-candidate/form-candidate.component';
 import {ViewEditCandidateComponent} from './view-edit-candidate/view-edit-candidate.component';
-import {MatDividerModule} from '@angular/material/divider';
-import {SharedModule} from '../../shared/shared.module';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {ReactiveFormsModule} from '@angular/forms';
-import {MatButtonModule} from '@angular/material/button';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import {MatNativeDateModule, MatOptionModule} from '@angular/material/core';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MaterialModule} from '../../shared/material.module';
 
 
 @NgModule({
   declarations: [FormCandidateComponent, ViewEditCandidateComponent],
   imports: [
     CommonModule,
-    MatDividerModule,
-    SharedModule,
-    MatSnackBarModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
+    MaterialModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatAutocompleteModule,
+    MatOptionModule
   ]
 })
 export class CandidateModule {

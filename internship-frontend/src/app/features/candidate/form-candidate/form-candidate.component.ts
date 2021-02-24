@@ -1,11 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {DataStorageService} from '../../../service/data-storage/data-storage.service';
-import {FormBuilder, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Skills} from '../../../model/skill/skills';
 import {FormCandidateService} from '../../../service/candidate/form-candidate/form-candidate.service';
 import {Candidate} from '../../../model/candidate/candidate';
 import {Skill} from '../../../model/skill/skill';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-form-candidate',
@@ -18,6 +20,9 @@ export class FormCandidateComponent implements OnInit {
   form: FormGroup;
   formSkill: FormGroup;
 
+  formControl = new FormControl();
+  filteredSkillsName: Observable<string[]>;
+
   minDate: Date;
   maxDate: Date;
 
@@ -25,6 +30,7 @@ export class FormCandidateComponent implements OnInit {
   pageSizeSkill: number;
   skills: Skills;
   skillsList: Skill[];
+  skillsNameList: string[];
   actionCandidate: string;
   candidateId: number;
 
@@ -94,7 +100,6 @@ export class FormCandidateComponent implements OnInit {
 
     } else {
       this.editCandidate(candidate);
-
     }
   }
 
@@ -116,7 +121,6 @@ export class FormCandidateComponent implements OnInit {
 
     } else {
       this.deleteSkillEdit(skillId);
-
     }
   }
 
@@ -128,7 +132,6 @@ export class FormCandidateComponent implements OnInit {
 
     } else {
       this.paginateEdit();
-
     }
   }
 
@@ -155,7 +158,6 @@ export class FormCandidateComponent implements OnInit {
         this.snackBar.open(error.error, 'Ok', {duration: 2000});
       }
     );
-
   }
 
   paginateEdit(): void {
@@ -179,7 +181,6 @@ export class FormCandidateComponent implements OnInit {
     if (this.skills.totalElements % 5 === 1) {
       this.skills.totalPages += 1;
     }
-
     this.paginateAdd();
   }
 
@@ -229,5 +230,19 @@ export class FormCandidateComponent implements OnInit {
         this.snackBar.open(error.error, 'Ok', {duration: 2000});
       }
     );
+  }
+
+  onKeyPress(input: any): void {
+    if (input.value.length > 2) {
+      this.formCandidateService.getAutocomplete(input.value).subscribe(
+        result => {
+          this.skillsNameList = result.map(skill => skill.name);
+          this.filteredSkillsName = this.formControl.valueChanges.pipe(
+            startWith(''),
+            map(value => this.skillsNameList.filter(option => option.toLowerCase().indexOf(value.toLowerCase()) === 0))
+          );
+        }
+      );
+    }
   }
 }

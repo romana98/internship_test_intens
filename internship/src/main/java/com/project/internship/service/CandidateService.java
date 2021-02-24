@@ -21,7 +21,7 @@ public class CandidateService {
     SkillService skillService;
 
     public Candidate save(Candidate candidate) {
-        if (candidateRepository.findByEmailOrContactNumber(candidate.getEmail(), candidate.getContactNumber()) == null) {
+        if (candidateRepository.findByEmailAndIdIsNotOrContactNumberAndIdIsNot(candidate.getEmail(), -1, candidate.getContactNumber(), -1) == null) {
             Set<Skill> updatedSkills = skillService.getSkillIds(candidate.getSkills());
             candidate.setSkills(updatedSkills);
             candidate = candidateRepository.save(candidate);
@@ -41,7 +41,7 @@ public class CandidateService {
 
     public boolean update(Candidate candidate) {
         Candidate oldCandidate = findOne(candidate.getId());
-        if (oldCandidate != null) {
+        if (oldCandidate != null && candidateRepository.findByEmailAndIdIsNotOrContactNumberAndIdIsNot(candidate.getEmail(), candidate.getId(), candidate.getContactNumber(), candidate.getId()) == null) {
             candidate.setSkills(oldCandidate.getSkills());
             candidateRepository.save(candidate);
             return true;

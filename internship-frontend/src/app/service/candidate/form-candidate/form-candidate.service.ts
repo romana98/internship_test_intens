@@ -40,4 +40,9 @@ export class FormCandidateService {
   removeSkillFromCandidate(candidateId: number, skillId: number): Observable<any> {
     return this.http.delete(this.pathCandidates + '/' + candidateId + '/' + skillId);
   }
+
+  getAutocomplete(subStrSkill: string): Observable<Skill[]> {
+    return this.http.get<Skill[]>(this.pathSkill + '/autocomplete/' + subStrSkill);
+  }
+
 }

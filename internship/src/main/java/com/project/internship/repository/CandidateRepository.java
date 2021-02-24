@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate, Integer> {
-    Candidate findByEmailOrContactNumber(String email, String contactNumber);
+    Candidate findByEmailAndIdIsNotOrContactNumberAndIdIsNot(String email,Integer id, String contactNumber, Integer id1);
 
     @Query("SELECT DISTINCT candidate FROM Candidate candidate JOIN candidate.skills skill WHERE upper(skill.name) like upper(CONCAT('%', ?1, '%')) or upper(?1) like upper(CONCAT('%', skill.name, '%')) ")
     Page<Candidate> findAllBySkillName(String skillName, Pageable pageable);

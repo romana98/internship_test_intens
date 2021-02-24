@@ -80,7 +80,15 @@
     <form [formGroup]="formSkill" (ngSubmit)="submitSkill()" style="display: inline-block; width: 100%;">
       <mat-form-field>
         <mat-label for="username">Skill:</mat-label>
-        <input matInput id="skill" name="skill" placeholder="Skill" [formControl]="formSkill.controls.skill">
+        <input matInput id="skill" name="skill" placeholder="Skill" [formControl]="formSkill.controls.skill"
+               [matAutocomplete]="auto"
+               (input)="onKeyPress($event.target.valueOf())">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredSkillsName | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+
         <mat-error *ngIf="formSkill.controls.skill.touched && formSkill.controls.skill.errors?.required">
           This field can't be empty!
         </mat-error>

@@ -58,7 +58,7 @@ public class CandidateController {
     public ResponseEntity<?> updateCandidate(@Valid @RequestBody CandidateDTO candidateDTO) {
 
         if (candidateService.update(candidateMapper.toEntity(candidateDTO))) {
-            return new ResponseEntity<>("Candidate successfully updated.", HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Email or contact number already in use.", HttpStatus.BAD_REQUEST);
     }
@@ -85,7 +85,7 @@ public class CandidateController {
     @RequestMapping(value = "/{candidateId}/{skillId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeSkillFromCandidate(@PathVariable Integer candidateId, @PathVariable Integer skillId) {
         if (candidateService.removeSkill(candidateId, skillId)) {
-            return new ResponseEntity<>("Successfully removed skill.", HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Error occurred while removing skill", HttpStatus.BAD_REQUEST);
     }
@@ -93,7 +93,7 @@ public class CandidateController {
     @RequestMapping(value = "/{candidateId}", method = RequestMethod.PUT)
     public ResponseEntity<?> addSkillToCandidate(@PathVariable Integer candidateId, @RequestBody SkillDTO skillDTO) {
         if (candidateService.addSkill(candidateId, skillMapper.toEntity(skillDTO))) {
-            return new ResponseEntity<>("Successfully added skill.", HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Error occurred while adding skill", HttpStatus.BAD_REQUEST);
     }

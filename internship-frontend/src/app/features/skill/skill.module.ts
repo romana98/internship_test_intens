@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ViewEditSkillComponent } from './view-edit-skill/view-edit-skill.component';
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {CrudSkillComponent} from './crud-skill/crud-skill.component';
 
 
 @NgModule({
-  declarations: [ViewEditSkillComponent],
+  declarations: [CrudSkillComponent],
   imports: [
     CommonModule
   ]
 })
-export class SkillModule { }
+export class SkillModule {
+}

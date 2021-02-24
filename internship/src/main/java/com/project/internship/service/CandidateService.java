@@ -42,8 +42,7 @@ public class CandidateService {
     public boolean update(Candidate candidate) {
         Candidate oldCandidate = findOne(candidate.getId());
         if (oldCandidate != null) {
-            Set<Skill> updatedSkills = skillService.getSkillIds(candidate.getSkills());
-            candidate.setSkills(updatedSkills);
+            candidate.setSkills(oldCandidate.getSkills());
             candidateRepository.save(candidate);
             return true;
         }

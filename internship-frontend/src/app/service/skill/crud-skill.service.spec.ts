@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FormSkillService } from './form-skill.service';
+import { CrudSkillService } from './crud-skill.service';
 
-describe('FormSkillService', () => {
-  let service: FormSkillService;
+describe('CrudSkillService', () => {
+  let service: CrudSkillService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(FormSkillService);
+    service = TestBed.inject(CrudSkillService);
   });
 
   it('should be created', () => {

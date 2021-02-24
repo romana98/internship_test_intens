@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewEditSkillComponent } from './view-edit-skill.component';
+import { CrudSkillComponent } from './crud-skill.component';
 
-describe('ViewEditSkillComponent', () => {
-  let component: ViewEditSkillComponent;
-  let fixture: ComponentFixture<ViewEditSkillComponent>;
+describe('CrudSkillComponent', () => {
+  let component: CrudSkillComponent;
+  let fixture: ComponentFixture<CrudSkillComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewEditSkillComponent ]
+      declarations: [ CrudSkillComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ViewEditSkillComponent);
+    fixture = TestBed.createComponent(CrudSkillComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

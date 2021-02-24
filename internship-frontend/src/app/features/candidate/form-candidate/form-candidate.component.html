@@ -1,1 +1,94 @@
-<p>form-candidate works!</p>
+<h1 class="mat-display-1;" style="text-align: center;  margin-top: 1%;">{{actionCandidate}}Candidate</h1>
+<mat-divider></mat-divider>
+
+
+<div style="display: block; float: left; padding-top: 2%; padding-left: 20%; width: 80%">
+  <br>
+  <form [formGroup]="form" (ngSubmit)="submit()" style="display: inline-block;">
+    <div>
+      <mat-form-field>
+        <mat-label for="username">Full name:</mat-label>
+        <input matInput id="fullName" name="fullName" placeholder="Full name" [formControl]="form.controls.fullName">
+        <mat-error *ngIf="form.controls.fullName.touched && form.controls.fullName.errors?.required">
+          This field can't be empty!
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label for="password">Contact number:</mat-label>
+        <input matInput id="contactNumber" name="contactNumber" placeholder="Contact number"
+               [formControl]="form.controls.contactNumber">
+        <mat-error *ngIf="form.controls.contactNumber.touched && form.controls.contactNumber.errors?.required">
+          This field can't be empty!
+        </mat-error>
+        <mat-error *ngIf="form.controls.contactNumber.errors?.pattern">
+          Contact number must be between 6-7 length!
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label for="email">Email:</mat-label>
+        <input matInput type="email" id="email" name="email" placeholder="email" [formControl]="form.controls.email">
+        <mat-error *ngIf="form.controls.email.touched && form.controls.email.errors?.required">
+          This field can't be empty!
+        </mat-error>
+        <mat-error *ngIf="form.controls.email.errors?.email">
+          Invalid email format!
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Date of birth</mat-label>
+        <input matInput [min]="minDate" [max]="maxDate" [formControl]="form.controls.dateOfBirth" [matDatepicker]="dob"
+        >
+        <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+        <mat-datepicker #dob disabled="false"></mat-datepicker>
+        <mat-error *ngIf="form.controls.dateOfBirth.hasError('matDatepickerMax')">Date should be inferior</mat-error>
+        <mat-error *ngIf="form.controls.dateOfBirth.hasError('matDatepickerMin')">Date should be superior</mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <div style="padding-top: 10%">
+      <button mat-raised-button type="submit" [disabled]="!form.valid">{{actionCandidate}}Candidate</button>
+    </div>
+  </form>
+
+  <div style="padding-right: 30%; width: 35%; float: right">
+
+    <app-table [dataSource]="skills.content"
+               [columnsToDisplay]="['name', 'delete']"
+               (Delete)="onDelete($event)"
+               [columnsToIterate]="['name']"></app-table>
+
+    <app-pagination [pageSize]="pageSizeSkill"
+                    [totalItems]="skills.totalElements"
+                    [totalPages]="skills.totalPages"
+                    [currentPage]="skills.number"
+                    (ChangePage)="onPaginationSkill($event)"
+    ></app-pagination>
+
+  </div>
+
+  <div style="padding-right: 30%; padding-top: 3%; width: 35%; float: right;">
+    <form [formGroup]="formSkill" (ngSubmit)="submitSkill()" style="display: inline-block; width: 100%;">
+      <mat-form-field>
+        <mat-label for="username">Skill:</mat-label>
+        <input matInput id="skill" name="skill" placeholder="Skill" [formControl]="formSkill.controls.skill">
+        <mat-error *ngIf="formSkill.controls.skill.touched && formSkill.controls.skill.errors?.required">
+          This field can't be empty!
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button type="submit" style="margin-left: 4%" [disabled]="!formSkill.valid">Add Skill</button>
+
+    </form>
+  </div>
+
+</div>

@@ -1,8 +1,7 @@
 <h1 class="mat-display-1;" style="text-align: center;  margin-top: 0.7%;">Candidates</h1>
 <mat-divider></mat-divider>
-<br><br>
 
-<div style="text-align: center;">
+<div style="text-align: center; padding-top: 2%">
   <form [formGroup]="form" (ngSubmit)="submit()" style="display: inline-block; width: 100%">
     <mat-form-field>
       <mat-label>Candidate name:</mat-label>
@@ -18,8 +17,7 @@
   </form>
 </div>
 
-<br><br><br>
-<div style="display:inline-block; width: 100%">
+<div style="display:inline-block; width: 100%; padding-top: 5%">
   <div style="padding-left: 6%; width: 55%; float: left">
 
     <app-table [dataSource]="candidates.content"
@@ -42,8 +40,6 @@
 
     <app-table [dataSource]="skills.content"
                [columnsToDisplay]="['name']"
-               (Delete)="onDelete($event)"
-               (Click)="showSkills($event)"
                [columnsToIterate]="['name']"></app-table>
 
     <app-pagination [pageSize]="pageSizeSkill"

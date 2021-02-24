@@ -54,7 +54,6 @@ export class ViewEditCandidateComponent implements OnInit {
   }
 
   submit(): void {
-    console.log(this.form.value.name, this.form.value.skill);
     const sendData = {byName: this.form.value.name, bySkillName: this.form.value.skill};
 
     this.viewEditCandidateService.search(sendData).subscribe(
@@ -102,7 +101,6 @@ export class ViewEditCandidateComponent implements OnInit {
         this.candidates = result;
       }
     );
-
   }
 
   onPaginationSkill(page: number): void {
@@ -112,8 +110,6 @@ export class ViewEditCandidateComponent implements OnInit {
         this.skills = result;
       }
     );
-
-
   }
 
 }

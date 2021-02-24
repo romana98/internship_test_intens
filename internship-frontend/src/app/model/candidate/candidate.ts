@@ -5,6 +5,7 @@ export class Candidate {
   fullName: string;
   id: number;
   skills: string[];
+
   constructor(contactNumber: string, dateOfBirth: string, email: string, fullName: string, id: number, skills: string[]) {
     this.contactNumber = contactNumber;
     this.dateOfBirth = dateOfBirth;

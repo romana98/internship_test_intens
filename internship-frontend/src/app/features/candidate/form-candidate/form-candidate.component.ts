@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {DataStorageService} from '../../../service/data-storage/data-storage.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Skills} from '../../../model/skill/skills';
 import {FormCandidateService} from '../../../service/candidate/form-candidate/form-candidate.service';
@@ -13,7 +13,7 @@ import {Skill} from '../../../model/skill/skill';
   styleUrls: ['./form-candidate.component.css']
 })
 export class FormCandidateComponent implements OnInit {
-
+  @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
   form: FormGroup;
   formSkill: FormGroup;
@@ -148,6 +148,8 @@ export class FormCandidateComponent implements OnInit {
     this.formCandidateService.addCandidate(candidate).subscribe(
       () => {
         this.snackBar.open('Candidate successfully added.', 'Ok', {duration: 2000});
+        setTimeout(() => this.formGroupDirective.resetForm(), 0);
+        this.skills = new Skills();
       },
       error => {
         this.snackBar.open(error.error, 'Ok', {duration: 2000});

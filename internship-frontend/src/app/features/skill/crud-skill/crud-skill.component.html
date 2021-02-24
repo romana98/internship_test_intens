@@ -1,1 +1,48 @@
-<p>crud-skill works!</p>
+<h1 class="mat-display-1;" style="text-align: center;  margin-top: 0.7%;">Skill</h1>
+<mat-divider></mat-divider>
+
+<div style="text-align: left; padding-top: 3%; padding-left: 10%">
+  <form [formGroup]="formAdd" (ngSubmit)="submitAdd()" style="display: inline-block; width: 100%">
+    <mat-form-field>
+      <mat-label>Skill:</mat-label>
+      <input matInput id="nameAdd" name="name" placeholder="skill" [formControl]="formAdd.controls.name">
+    </mat-form-field>
+
+    <button mat-raised-button type="submit" style="margin-left: 2%" [disabled]="!formAdd.valid">Add Skill</button>
+  </form>
+</div>
+
+<div style="display:inline-block; width: 100%; padding-top: 5%">
+
+  <div style="padding-left: 10%; width: 40%; float: left">
+
+    <app-table [dataSource]="skills.content"
+               [columnsToDisplay]="['name', 'delete']"
+               (Delete)="onDelete($event)"
+               (Click)="onClick($event)"
+               [columnsToIterate]="['name']"></app-table>
+
+    <app-pagination [pageSize]="pageSizeSkill"
+                    [totalItems]="skills.totalElements"
+                    [totalPages]="skills.totalPages"
+                    [currentPage]="skills.number"
+                    (ChangePage)="onPaginationSkill($event)"
+    ></app-pagination>
+  </div>
+
+  <div style="padding-right: 5%; padding-top: 5%; width: 35%; float: right;" [hidden]="hideEdit">
+    <form [formGroup]="formEdit" (ngSubmit)="submitEdit()" style="display: inline-block; width: 100%;">
+      <mat-form-field>
+        <mat-label for="username">Skill:</mat-label>
+        <input matInput id="skill" name="skill" placeholder="Skill" [formControl]="formEdit.controls.name">
+        <mat-error *ngIf="formEdit.controls.name.touched && formEdit.controls.name.errors?.required">
+          This field can't be empty!
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button type="submit" style="margin-left: 4%" [disabled]="!formEdit.valid">Edit Skill</button>
+
+    </form>
+  </div>
+
+</div>

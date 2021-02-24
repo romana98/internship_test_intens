@@ -44,7 +44,7 @@ public class SkillController {
     @RequestMapping(value = "/{skillId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteSkill(@PathVariable Integer skillId) {
         if (skillService.delete(skillId)) {
-            return new ResponseEntity<>("Successfully deleted skill.", HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Candidates have selected skill, deleting failed.", HttpStatus.BAD_REQUEST);
     }
@@ -53,7 +53,7 @@ public class SkillController {
     public ResponseEntity<?> updateSkill(@Valid @RequestBody SkillDTO skillDTO) {
 
         if (skillService.update(skillMapper.toEntity(skillDTO))) {
-            return new ResponseEntity<>("Skill successfully updated.", HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Name already in use.", HttpStatus.BAD_REQUEST);
     }

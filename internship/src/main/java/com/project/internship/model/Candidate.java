@@ -47,6 +47,13 @@ public class Candidate {
         this.email = email;
     }
 
+    public Candidate(String fullName, Date dateOfBirth, String contactNumber, String email) {
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
+        this.contactNumber = contactNumber;
+        this.email = email;
+    }
+
     public int getId() {
         return id;
     }

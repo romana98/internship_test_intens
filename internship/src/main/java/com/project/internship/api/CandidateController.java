@@ -49,7 +49,7 @@ public class CandidateController {
     @RequestMapping(value = "/{candidateId}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteCandidate(@PathVariable Integer candidateId) {
         if (candidateService.delete(candidateId)) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>("Error occurred while deleting candidate", HttpStatus.BAD_REQUEST);
     }
@@ -58,7 +58,7 @@ public class CandidateController {
     public ResponseEntity<?> updateCandidate(@Valid @RequestBody CandidateDTO candidateDTO) {
 
         if (candidateService.update(candidateMapper.toEntity(candidateDTO))) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>("Email or contact number already in use.", HttpStatus.BAD_REQUEST);
     }
@@ -79,13 +79,13 @@ public class CandidateController {
             CandidateDTO candidateDTO = candidateMapper.toDto(candidate);
             return new ResponseEntity<>(candidateDTO, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Candidate doesn't exist", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Candidate doesn't exist", HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/{candidateId}/{skillId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeSkillFromCandidate(@PathVariable Integer candidateId, @PathVariable Integer skillId) {
         if (candidateService.removeSkill(candidateId, skillId)) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>("Error occurred while removing skill", HttpStatus.BAD_REQUEST);
     }
@@ -98,8 +98,8 @@ public class CandidateController {
         return new ResponseEntity<>("Error occurred while adding skill", HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value="/search", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Page<CandidateDTO>> searchCandidates(@RequestBody SearchDTO searchDTO, Pageable pageable){
+    @RequestMapping(value = "/search", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<CandidateDTO>> searchCandidates(@RequestBody SearchDTO searchDTO, Pageable pageable) {
         Page<Candidate> page = candidateService.search(searchDTO, pageable);
         List<CandidateDTO> candidateDTOs = candidateMapper.toDTOList(page.toList());
         Page<CandidateDTO> candidateDTOPage = new PageImpl<>(candidateDTOs, page.getPageable(), page.getTotalElements());

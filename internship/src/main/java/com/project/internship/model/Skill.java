@@ -1,8 +1,8 @@
 package com.project.internship.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "skills")
@@ -21,7 +21,7 @@ public class Skill {
                     CascadeType.MERGE
             },
             mappedBy = "skills")
-    private List<Candidate> candidates = new ArrayList<>();
+    private Set<Candidate> candidates = new HashSet<>();
 
     public Skill() {
     }
@@ -52,11 +52,11 @@ public class Skill {
         this.name = name;
     }
 
-    public List<Candidate> getCandidates() {
+    public Set<Candidate> getCandidates() {
         return candidates;
     }
 
-    public void setCandidates(List<Candidate> candidates) {
+    public void setCandidates(HashSet<Candidate> candidates) {
         this.candidates = candidates;
     }
 

@@ -23,8 +23,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 
-import static com.project.internship.api.contants.CandidateConstants.*;
-import static com.project.internship.api.contants.SkillConstants.*;
+import static com.project.internship.contants.CandidateConstants.*;
+import static com.project.internship.contants.SkillConstants.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.BDDMockito.given;

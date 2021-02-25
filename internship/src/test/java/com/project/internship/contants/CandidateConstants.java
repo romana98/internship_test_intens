@@ -1,4 +1,4 @@
-package com.project.internship.api.contants;
+package com.project.internship.contants;
 
 import java.util.Calendar;
 import java.util.Date;

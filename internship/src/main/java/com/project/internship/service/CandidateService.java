@@ -33,7 +33,7 @@ public class CandidateService {
     }
 
     public boolean delete(Integer candidateId) {
-        Candidate candidate = findOne(candidateId);
+        Candidate candidate = candidateRepository.findById(candidateId).orElse(null);
         if (candidate != null) {
             candidateRepository.delete(candidate);
             return true;
@@ -42,11 +42,13 @@ public class CandidateService {
     }
 
     public boolean update(Candidate candidate) {
-        Candidate oldCandidate = findOne(candidate.getId());
-        if (oldCandidate != null && candidateRepository.findByEmailAndIdIsNotOrContactNumberAndIdIsNot(candidate.getEmail(), candidate.getId(), candidate.getContactNumber(), candidate.getId()) == null) {
-            candidate.setSkills(oldCandidate.getSkills());
-            candidateRepository.save(candidate);
-            return true;
+        Candidate oldCandidate = candidateRepository.findById(candidate.getId()).orElse(null);
+        if (oldCandidate != null) {
+            if (candidateRepository.findByEmailAndIdIsNotOrContactNumberAndIdIsNot(candidate.getEmail(), candidate.getId(), candidate.getContactNumber(), candidate.getId()) == null) {
+                candidate.setSkills(oldCandidate.getSkills());
+                candidateRepository.save(candidate);
+                return true;
+            }
         }
         return false;
     }
@@ -61,7 +63,7 @@ public class CandidateService {
 
     public boolean removeSkill(Integer candidateId, Integer skillId) {
         Skill skill = skillService.findOne(skillId);
-        Candidate candidate = findOne(candidateId);
+        Candidate candidate = candidateRepository.findById(candidateId).orElse(null);
         if (skill != null && candidate != null) {
             candidate.getSkills().remove(skill);
             candidateRepository.save(candidate);
@@ -72,7 +74,7 @@ public class CandidateService {
 
     public boolean addSkill(Integer candidateId, Skill newSkill) {
         Skill skill = skillService.findByName(newSkill.getName());
-        Candidate candidate = findOne(candidateId);
+        Candidate candidate = candidateRepository.findById(candidateId).orElse(null);
         if (candidate != null) {
             candidate.getSkills().add(skill != null ? skill : newSkill);
             candidateRepository.save(candidate);
@@ -86,7 +88,7 @@ public class CandidateService {
         String skillName = searchDTO.getBySkillName();
 
         if (name.equals("") && skillName.equals("")) {
-            return findAll(pageable);
+            return candidateRepository.findAll(pageable);
 
         } else if (name.equals("")) {
             List<String> skills = Arrays.asList(skillName.split("\\|"));

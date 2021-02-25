@@ -1,4 +1,4 @@
-package com.project.internship.service.constants;
+package com.project.internship.contants;
 
 public class SkillConstants {
 
@@ -33,4 +33,5 @@ public class SkillConstants {
 
     //Autocomplete
     public static final String AUTOCOMPLETE_SUB_STR = "Ski";
+    public static final String AUTOCOMPLETE_SUB_STR_FALSE = "Candidate";
 }

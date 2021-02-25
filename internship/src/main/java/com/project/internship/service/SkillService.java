@@ -28,15 +28,18 @@ public class SkillService {
     public boolean delete(Integer skillId) {
         List<Skill> skills = skillRepository.findAllByReference(skillId);
         if (skills.isEmpty()) {
-            skillRepository.delete(findOne(skillId));
-            return true;
+            Skill skill = skillRepository.findById(skillId).orElse(null);
+            if (skill != null) {
+                skillRepository.delete(skill);
+                return true;
+            }
         }
         return false;
     }
 
     public boolean update(Skill skill) {
-        Skill oldSkill = findOne(skill.getId());
-        Skill existSkill = findByName(skill.getName());
+        Skill oldSkill = skillRepository.findById(skill.getId()).orElse(null);
+        Skill existSkill = skillRepository.findByName(skill.getName());
         if (oldSkill != null && existSkill == null) {
             skillRepository.save(skill);
             return true;
@@ -71,7 +74,7 @@ public class SkillService {
     public Set<Skill> getSkillIds(Set<Skill> skills) {
         Set<Skill> updatedSkills = new HashSet<>();
         for (Skill skill : skills) {
-            Skill foundSkill = findByName(skill.getName());
+            Skill foundSkill = skillRepository.findByName(skill.getName());
             if (foundSkill != null) {
                 updatedSkills.add(foundSkill);
             } else {

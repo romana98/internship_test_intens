@@ -54,6 +54,15 @@ public class Candidate {
         this.email = email;
     }
 
+    public Candidate(int id, String fullName, Date dateOfBirth, String contactNumber, String email, Set<Skill> skills) {
+        this.id = id;
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
+        this.contactNumber = contactNumber;
+        this.email = email;
+        this.skills = skills;
+    }
+
     public int getId() {
         return id;
     }

@@ -18,13 +18,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
-import static com.project.internship.api.contants.CandidateConstants.*;
-import static com.project.internship.api.contants.SkillConstants.*;
+import static com.project.internship.contants.CandidateConstants.*;
+import static com.project.internship.contants.SkillConstants.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.BDDMockito.given;
@@ -73,8 +70,8 @@ public class SkillControllerTest {
     }
 
     @Test
-    public void createSkill_StatusBadRequest() throws Exception {
-        Skill saveSkill = new Skill();
+    public void createSkill_FalseUnique_StatusBadRequest() throws Exception {
+        Skill saveSkill = new Skill(SKILL_NAME);
 
         given(skillService.save(Mockito.any(Skill.class))).willReturn(null);
         String json = TestUtil.json(saveSkill);
@@ -119,7 +116,7 @@ public class SkillControllerTest {
     }
 
     @Test
-    public void getSkill_FalseUnique_StatusBadRequest() throws Exception {
+    public void updateSkill_FalseUnique_StatusBadRequest() throws Exception {
         Skill updateSkill = new Skill(SKILL_ID, FALSE_UNIQUE_NAME);
         String json = TestUtil.json(updateSkill);
 
@@ -130,6 +127,27 @@ public class SkillControllerTest {
                 .content(json))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is("Name already in use.")));
+    }
+
+    @Test
+    public void getSkill_StatusOK() throws Exception {
+        given(skillService.findOne(SKILL_ID)).willReturn(skill);
+
+        mvc.perform(get(basePath + "/" + SKILL_ID)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(SKILL_ID)))
+                .andExpect(jsonPath("$.name", is(SKILL_NAME)));
+    }
+
+    @Test
+    public void getSkill_FalseSkillID_StatusBadRequest() throws Exception {
+        given(skillService.findOne(FALSE_SKILL_ID)).willReturn(null);
+
+        mvc.perform(get(basePath + "/" + SKILL_ID)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Skill doesn't exist")));
     }
 
     @Test
@@ -176,16 +194,14 @@ public class SkillControllerTest {
 
     @Test
     public void getSkillsForAutocomplete_Empty_StatusOK() throws Exception {
-        List<Skill> skills = Collections.singletonList(skill);
+        List<Skill> skills = new ArrayList<>();
 
-        given(skillService.findAll(AUTOCOMPLETE_SUB_STR)).willReturn(skills);
+        given(skillService.findAll(AUTOCOMPLETE_SUB_STR_FALSE)).willReturn(skills);
 
         mvc.perform(get(basePath + "/autocomplete/" + AUTOCOMPLETE_SUB_STR)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].id", is(SKILL_ID)))
-                .andExpect(jsonPath("$[0].name", is(SKILL_NAME)));
+                .andExpect(jsonPath("$", hasSize(0)));
     }
 
     @Test

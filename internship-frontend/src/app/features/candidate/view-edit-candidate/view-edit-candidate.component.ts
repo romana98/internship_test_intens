@@ -82,6 +82,10 @@ export class ViewEditCandidateComponent implements OnInit {
       () => {
         this.snackBar.open('Successfully deleted candidate.', 'Ok', {duration: 2000});
         this.candidates.content = this.candidates.content.filter(candidate => candidate.id !== candidateId);
+        this.candidates.totalElements -= 1;
+        if (this.candidates.totalElements % 5 === 0) {
+          this.onPaginationCandidate(this.pageCandidate - 1);
+        }
       },
       error => {
         this.snackBar.open(error.error, 'Ok', {duration: 2000});
@@ -97,6 +101,7 @@ export class ViewEditCandidateComponent implements OnInit {
 
   showSkills(candidateId: number): void {
     this.showSkillsValue = false;
+    this.pageSkill = 0;
     this.showSkillsCurrentCandidate = candidateId;
     this.viewEditCandidateService.getSkillsByCandidate(candidateId, this.pageSkill).subscribe(
       result => {

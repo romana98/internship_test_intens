@@ -178,8 +178,12 @@ export class FormCandidateComponent implements OnInit {
     this.skillsList = this.skillsList.filter(skill => skill.id !== skillId);
     this.skills.totalElements = this.skillsList.length;
 
-    if (this.skills.totalElements % 5 === 1) {
-      this.skills.totalPages += 1;
+    if (this.skills.totalElements % 5 === 0) {
+      this.skills.totalPages -= 1;
+      if (this.pageSkill === this.skills.totalPages) {
+        this.pageSkill = this.skills.totalPages - 1;
+        this.skills.number = this.pageSkill;
+      }
     }
     this.paginateAdd();
   }
@@ -214,6 +218,8 @@ export class FormCandidateComponent implements OnInit {
     }
 
     this.paginateAdd();
+
+    this.clearAddSkillForm();
   }
 
   addSkillEdit(skill: Skill): void {
@@ -225,6 +231,7 @@ export class FormCandidateComponent implements OnInit {
           result => {
             this.skills = result;
           });
+        this.clearAddSkillForm();
       },
       error => {
         this.snackBar.open(error.error, 'Ok', {duration: 2000});
@@ -244,5 +251,13 @@ export class FormCandidateComponent implements OnInit {
         }
       );
     }
+  }
+
+  clearAddSkillForm(): void {
+    this.formSkill.reset();
+
+    Object.keys(this.formSkill.controls).forEach(key => {
+      this.formSkill.get(key).setErrors(null);
+    });
   }
 }

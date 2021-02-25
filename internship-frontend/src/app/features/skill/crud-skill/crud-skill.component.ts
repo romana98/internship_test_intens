@@ -53,6 +53,10 @@ export class CrudSkillComponent implements OnInit {
       () => {
         this.snackBar.open('Successfully deleted skill.', 'Ok', {duration: 2000});
         this.skills.content = this.skills.content.filter(skill => skill.id !== skillId);
+        this.skills.totalElements -= 1;
+        if (this.skills.totalElements % 5 === 0) {
+          this.onPaginationSkill(this.pageSkill - 1);
+        }
       },
       error => {
         this.snackBar.open(error.error, 'Ok', {duration: 2000});

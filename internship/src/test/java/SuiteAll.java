@@ -1,5 +1,7 @@
-import com.project.internship.api.CandidateControllerTest;
-import com.project.internship.api.SkillControllerTest;
+import com.project.internship.api.CandidateControllerIntegrationTest;
+import com.project.internship.api.CandidateControllerUnitTest;
+import com.project.internship.api.SkillControllerIntegrationTest;
+import com.project.internship.api.SkillControllerUnitTest;
 import com.project.internship.service.CandidateServiceIntegrationTest;
 import com.project.internship.service.CandidateServiceUnitTest;
 import com.project.internship.service.SkillServiceIntegrationTest;
@@ -9,12 +11,14 @@ import org.junit.runners.Suite;
 
 @Suite.SuiteClasses({
         //Unit tests
-        CandidateControllerTest.class,
-        SkillControllerTest.class,
+        CandidateControllerUnitTest.class,
+        SkillControllerUnitTest.class,
         CandidateServiceUnitTest.class,
         SkillServiceUnitTest.class,
 
         //Integration tests
+        CandidateControllerIntegrationTest.class,
+        SkillControllerIntegrationTest.class,
         CandidateServiceIntegrationTest.class,
         SkillServiceIntegrationTest.class
 })

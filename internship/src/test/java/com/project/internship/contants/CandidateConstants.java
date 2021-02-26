@@ -55,4 +55,9 @@ public class CandidateConstants {
     public static final Integer CANDIDATE_DELETE_ID = 3;
     public static final String CANDIDATE_UPDATE_EMAIL = "john.smith@email.com";
 
+    //CANDIDATE CONTROLLER I TEST
+    public static final String NAME_GET = "John Smith";
+    public static final String CONTACT_NUMBER_GET = "063505050";
+    public static final String EMAIL_GET = "john.smith@email.com";
+
 }

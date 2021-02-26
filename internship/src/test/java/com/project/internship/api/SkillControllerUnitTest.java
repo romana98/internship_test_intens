@@ -1,6 +1,6 @@
 package com.project.internship.api;
 
-import com.project.internship.TestUtil;
+import com.project.internship.helper.TestUtil;
 import com.project.internship.model.Candidate;
 import com.project.internship.model.Skill;
 import com.project.internship.service.SkillService;
@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(SkillController.class)
-public class SkillControllerTest {
+public class SkillControllerUnitTest {
 
     @Autowired
     private MockMvc mvc;
@@ -116,6 +116,20 @@ public class SkillControllerTest {
     }
 
     @Test
+    public void update_FalseSkillId_Fail() throws Exception {
+        Skill updateSkill = new Skill(FALSE_SKILL_ID, UPDATE_SKILL_NAME);
+        String json = TestUtil.json(updateSkill);
+
+        given(skillService.update(Mockito.any(Skill.class))).willReturn(false);
+
+        mvc.perform(put(basePath)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Name already in use.")));
+    }
+
+    @Test
     public void updateSkill_FalseUnique_StatusBadRequest() throws Exception {
         Skill updateSkill = new Skill(SKILL_ID, FALSE_UNIQUE_NAME);
         String json = TestUtil.json(updateSkill);
@@ -180,16 +194,16 @@ public class SkillControllerTest {
 
     @Test
     public void getSkillsForAutocomplete_Found_StatusOK() throws Exception {
-        Page<Skill> page = new PageImpl<>(Collections.singletonList(skill));
+        List<Skill> skills = Collections.singletonList(skill);
 
-        given(skillService.findAll(Mockito.any(Pageable.class))).willReturn(page);
+        given(skillService.findAll(AUTOCOMPLETE_SUB_STR)).willReturn(skills);
 
-        mvc.perform(get(basePath + "/by-page?page=0&size=5")
+        mvc.perform(get(basePath + "/autocomplete/" + AUTOCOMPLETE_SUB_STR)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].id", is(SKILL_ID)))
-                .andExpect(jsonPath("$.content[0].name", is(SKILL_NAME)));
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$.[0].id", is(SKILL_ID)))
+                .andExpect(jsonPath("$.[0].name", is(SKILL_NAME)));
     }
 
     @Test
@@ -198,7 +212,7 @@ public class SkillControllerTest {
 
         given(skillService.findAll(AUTOCOMPLETE_SUB_STR_FALSE)).willReturn(skills);
 
-        mvc.perform(get(basePath + "/autocomplete/" + AUTOCOMPLETE_SUB_STR)
+        mvc.perform(get(basePath + "/autocomplete/" + AUTOCOMPLETE_SUB_STR_FALSE)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));

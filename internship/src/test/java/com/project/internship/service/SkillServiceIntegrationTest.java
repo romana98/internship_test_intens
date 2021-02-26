@@ -13,7 +13,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -167,11 +166,11 @@ public class SkillServiceIntegrationTest {
 
         Skill[] updatedSkillsList = updatedSkills.toArray(new Skill[0]);
 
-        for(Skill skill : updatedSkillsList){
-            if(skill.getName().equals(SKILL_REMOVE_NAME)){
+        for (Skill skill : updatedSkillsList) {
+            if (skill.getName().equals(SKILL_REMOVE_NAME)) {
                 assertEquals(SKILL_REMOVE_ID.longValue(), skill.getId());
                 assertEquals(SKILL_REMOVE_NAME, skill.getName());
-            }else{
+            } else {
                 assertEquals(SKILL1_NAME, skill.getName());
             }
         }

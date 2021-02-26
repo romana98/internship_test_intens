@@ -1,6 +1,6 @@
 package com.project.internship.api;
 
-import com.project.internship.TestUtil;
+import com.project.internship.helper.TestUtil;
 import com.project.internship.dto.SearchDTO;
 import com.project.internship.model.Candidate;
 import com.project.internship.model.Skill;
@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(CandidateController.class)
-public class CandidateControllerTest {
+public class CandidateControllerUnitTest {
 
     @Autowired
     private MockMvc mvc;

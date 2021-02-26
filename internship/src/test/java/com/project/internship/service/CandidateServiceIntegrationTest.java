@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
@@ -76,7 +75,6 @@ public class CandidateServiceIntegrationTest {
     @Transactional
     @Rollback
     public void delete_Success() {
-
         boolean isDeleted = candidateService.delete(CANDIDATE_DELETE_ID);
 
         assertTrue(isDeleted);
@@ -117,6 +115,9 @@ public class CandidateServiceIntegrationTest {
     public void findOne_Success() {
         Candidate candidate = candidateService.findOne(CANDIDATE_ID);
         assertEquals(CANDIDATE_ID.longValue(), candidate.getId());
+        assertEquals(NAME_GET, candidate.getFullName());
+        assertEquals(EMAIL_GET, candidate.getEmail());
+        assertEquals(CONTACT_NUMBER_GET, candidate.getContactNumber());
     }
 
     @Test

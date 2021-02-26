@@ -16,6 +16,10 @@ public class SkillDTO {
         this.name = name;
     }
 
+    public SkillDTO(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

@@ -51,4 +51,8 @@ public class CandidateConstants {
     public static final Date DATE_OF_BIRTH2 = new GregorianCalendar(2002, Calendar.FEBRUARY, 25).getTime();
     public static final String EMAIL2 = "jane.doe@email.com";
 
+    //CANDIDATE SERVICE I TEST
+    public static final Integer CANDIDATE_DELETE_ID = 3;
+    public static final String CANDIDATE_UPDATE_EMAIL = "john.smith@email.com";
+
 }

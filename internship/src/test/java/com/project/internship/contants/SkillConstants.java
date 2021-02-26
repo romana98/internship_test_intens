@@ -34,4 +34,13 @@ public class SkillConstants {
     //Autocomplete
     public static final String AUTOCOMPLETE_SUB_STR = "Ski";
     public static final String AUTOCOMPLETE_SUB_STR_FALSE = "Candidate";
+
+    //CANDIDATE SERVICE I TEST
+    public static final Integer SKILL_REMOVE_ID = 1;
+    public static final String SKILL_REMOVE_NAME = "Java Programming";
+
+    //SKILL SERVICE I TEST
+    public static final String SKILL_UNIQUE_DEP_NAME = "Java Programming";
+    public static final Integer DELETE_SKILL_ID = 4;
+    public static final String AUTOCOMPLETE_SUB_STR_I = "C";
 }

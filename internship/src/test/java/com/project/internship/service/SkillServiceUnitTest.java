@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SkillServiceTest {
+public class SkillServiceUnitTest {
 
     @MockBean
     private SkillRepository skillRepository;

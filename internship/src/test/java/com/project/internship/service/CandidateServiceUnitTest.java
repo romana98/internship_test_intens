@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CandidateServiceTest {
+public class CandidateServiceUnitTest {
 
     @MockBean
     private CandidateRepository candidateRepository;
@@ -234,7 +234,7 @@ public class CandidateServiceTest {
     }
 
     @Test
-    public void findAll() {
+    public void findAll_Success() {
         Pageable pageable = PageRequest.of(0, 5);
         Page<Candidate> page = new PageImpl<>(Collections.singletonList(candidate));
         given(candidateRepository.findAll(pageable)).willReturn(page);
@@ -385,15 +385,15 @@ public class CandidateServiceTest {
         Skill skill = new Skill(SKILL2_ID, SKILL2_NAME);
 
         given(skillService.findByName(newSkill.getName())).willReturn(skill);
-        given(candidateRepository.findById(candidate.getId())).willReturn(java.util.Optional.empty());
+        given(candidateRepository.findById(FALSE_CANDIDATE_ID)).willReturn(java.util.Optional.empty());
 
-        boolean isAdded = candidateService.addSkill(candidate.getId(), newSkill);
+        boolean isAdded = candidateService.addSkill(FALSE_CANDIDATE_ID, newSkill);
 
         verify(skillService, times(1)).
                 findByName(SKILL2_NAME);
 
         verify(candidateRepository, times(1)).
-                findById(candidate.getId());
+                findById(FALSE_CANDIDATE_ID);
 
         assertFalse(isAdded);
     }

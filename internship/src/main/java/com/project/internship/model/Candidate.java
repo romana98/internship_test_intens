@@ -25,7 +25,7 @@ public class Candidate {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER,
+    @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE

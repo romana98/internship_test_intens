@@ -15,7 +15,7 @@ public class Skill {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER,
+    @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE

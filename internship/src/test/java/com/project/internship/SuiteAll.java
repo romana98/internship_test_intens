@@ -1,3 +1,5 @@
+package com.project.internship;
+
 import com.project.internship.api.CandidateControllerIntegrationTest;
 import com.project.internship.api.CandidateControllerUnitTest;
 import com.project.internship.api.SkillControllerIntegrationTest;

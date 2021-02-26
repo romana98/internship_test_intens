@@ -69,6 +69,7 @@ export class ViewEditCandidateComponent implements OnInit {
 
     this.viewEditCandidateService.search(sendData).subscribe(
       result => {
+        this.showSkillsValue = true;
         this.candidates = result;
         this.form.controls.name.setValue('');
         this.form.controls.skill.setValue('');
@@ -82,6 +83,8 @@ export class ViewEditCandidateComponent implements OnInit {
       () => {
         this.snackBar.open('Successfully deleted candidate.', 'Ok', {duration: 2000});
         this.candidates.content = this.candidates.content.filter(candidate => candidate.id !== candidateId);
+
+        // reset pagination attributes
         this.candidates.totalElements -= 1;
         if (this.candidates.totalElements % 5 === 0) {
           this.onPaginationCandidate(this.pageCandidate - 1);

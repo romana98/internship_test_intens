@@ -151,6 +151,7 @@ export class FormCandidateComponent implements OnInit {
     this.formCandidateService.addCandidate(candidate).subscribe(
       () => {
         this.snackBar.open('Candidate successfully added.', 'Ok', {duration: 2000});
+
         setTimeout(() => this.formGroupDirective.resetForm(), 0);
         this.skills = new Skills();
       },
@@ -178,6 +179,7 @@ export class FormCandidateComponent implements OnInit {
     this.skillsList = this.skillsList.filter(skill => skill.id !== skillId);
     this.skills.totalElements = this.skillsList.length;
 
+    // reset pagination attributes
     if (this.skills.totalElements % 5 === 0) {
       this.skills.totalPages -= 1;
       if (this.pageSkill === this.skills.totalPages) {
@@ -192,6 +194,7 @@ export class FormCandidateComponent implements OnInit {
     this.formCandidateService.removeSkillFromCandidate(this.candidateId, skillId).subscribe(
       () => {
         this.snackBar.open('Successfully removed skill.', 'Ok', {duration: 2000});
+
         this.skills.content = this.skills.content.filter(skill => skill.id !== skillId);
       },
       error => {
@@ -211,6 +214,7 @@ export class FormCandidateComponent implements OnInit {
       return newSkill;
     });
 
+    // reset pagination attributes
     this.skills.totalElements = this.skillsList.length;
 
     if (this.skills.totalElements % 5 === 1) {
